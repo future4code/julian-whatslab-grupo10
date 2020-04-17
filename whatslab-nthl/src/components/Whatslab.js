@@ -1,27 +1,23 @@
 import React from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   border: 1px solid black;
   height: 100vh;
   width: 70vw;
-  display: flex;
+  display: grid;
   justify-content: center;
+  grid-template-columns: 1fr 2fr 1fr;
 `;
 
 const Box = styled.div`
   height: 10vh;
   width: 20vw;
-  border: 1px solid blue;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const Input = styled.div`
   position: absolute;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-items: center;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -31,7 +27,7 @@ const InputPequeno = styled.input`
 `;
 
 const InputGrande = styled.input`
-  width: 41.3vw;
+  width: 42vw;
 `;
 
 const TextoNegrito = styled.p`
