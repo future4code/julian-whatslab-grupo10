@@ -3,31 +3,67 @@ import styled from "styled-components";
 
 const Container = styled.div`
   border: 1px solid black;
-  height: 100vh;
-  width: 70vw;
-  display: grid;
-  justify-content: center;
-  grid-template-columns: 1fr 2fr 1fr;
+  height: 98vh;
+  width: 42vw;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #dddae4;
+  border-radius: 5px;
 `;
 
 const Box = styled.div`
-  height: 10vh;
-  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  justify-self: flex-end;
+  position: absolute;
+  bottom: 50px;
+`;
+
+const BoxDaMensagem = styled.div`
+  border-radius: 5px;
+  background-color: #b6ed9d;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 30vh;
 `;
 
 const Input = styled.div`
   position: absolute;
-  bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
+  bottom: 10px;
+  width: auto;
 `;
 
 const InputPequeno = styled.input`
-  width: 13.5vw;
+  height: 6vh;
+  width: 6vw;
+  border-radius: 5px;
+  margin: 0 3px;
+  border: 0;
 `;
 
 const InputGrande = styled.input`
-  width: 42vw;
+  height: 6vh;
+  width: 28vw;
+  border-radius: 5px;
+  margin: 0 3px;
+  border: 0;
+`;
+
+const ButtonEnviar = styled.button`
+  height: 6vh;
+  width: 6vw;
+  border-radius: 5px;
+  background-color: white;
+  margin: 0 3px;
+  border: 0;
+  font-weight: bold;
 `;
 
 const TextoNegrito = styled.p`
@@ -36,47 +72,46 @@ const TextoNegrito = styled.p`
 
 class Whatslab extends React.Component {
   state = {
-    pessoas: [
-      {
-        nome: "",
-        texto: ""
-      }
-    ],
+    conversas: [],
 
-    valorInputPessoa: "",
-    valorInputTexto: ""
+    valorInputUsuario: "",
+    valorInputMensagem: ""
   };
 
-  adicionaPessoa = () => {
-    const novaPessoa = {
-      nome: this.state.valorInputPessoa,
-      texto: this.state.valorInputTexto
+  adicionaConversa = () => {
+    const novaConversa = {
+      Usuario: this.state.valorInputUsuario,
+      Mensagem: this.state.valorInputMensagem
     };
 
-    const novoPessoas = [...this.state.pessoas, novaPessoa];
+    const novaConversas = [...this.state.conversas, novaConversa];
 
     this.setState({
-      pessoas: novoPessoas,
-      valorInputPessoa: "",
-      valorInputTexto: ""
+      conversas: novaConversas,
+      valorInputUsuario: "",
+      valorInputMensagem: ""
     });
   };
-
-  onChangeInputPessoa = event => {
-    this.setState({ valorInputPessoa: event.target.value });
+  apertouEnter = ev => {
+    if (ev.key === "Enter") {
+      this.adicionaConversa();
+    }
+  };
+  onChangeInputUsuario = event => {
+    this.setState({ valorInputUsuario: event.target.value });
   };
 
-  onChangeInputTexto = event => {
-    this.setState({ valorInputTexto: event.target.value });
+  onChangeInputMensagem = event => {
+    this.setState({ valorInputMensagem: event.target.value });
   };
 
   render() {
-    const listaDeComponentes = this.state.pessoas.map(pessoa => {
+    const listaDeComponentes = this.state.conversas.map(conversa => {
       return (
-        <div>
-          <TextoNegrito>{pessoa.nome}</TextoNegrito>
-          <p>{pessoa.texto}</p>
-        </div>
+        <BoxDaMensagem>
+          <TextoNegrito>{conversa.Usuario}</TextoNegrito>
+          <p>{conversa.Mensagem}</p>
+        </BoxDaMensagem>
       );
     });
 
@@ -85,16 +120,17 @@ class Whatslab extends React.Component {
         <Box>{listaDeComponentes}</Box>
         <Input>
           <InputPequeno
-            value={this.state.valorInputPessoa}
-            onChange={this.onChangeInputPessoa}
-            placeholder={"Nome"}
+            value={this.state.valorInputUsuario}
+            onChange={this.onChangeInputUsuario}
+            placeholder={"Usuário"}
           />
           <InputGrande
-            value={this.state.valorInputTexto}
-            onChange={this.onChangeInputTexto}
-            placeholder={"Texto"}
+            value={this.state.valorInputMensagem}
+            onChange={this.onChangeInputMensagem}
+            placeholder={"Mensagem"}
+            onKeyDown={this.apertouEnter}
           />
-          <button onClick={this.adicionaPessoa}>Adicionar</button>
+          <ButtonEnviar onClick={this.adicionaConversa}>Enviar</ButtonEnviar>
         </Input>
       </Container>
     );
