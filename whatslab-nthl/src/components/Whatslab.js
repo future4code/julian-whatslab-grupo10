@@ -36,7 +36,7 @@ const BoxDaMensagem = styled.div`
 
 const Input = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   width: auto;
 `;
 
